@@ -1,6 +1,6 @@
 # sts2credentials
 
-![Python package](https://github.com/ynouri/sts2credentials/workflows/Python%20package/badge.svg) [![PyPI package](https://badge.fury.io/py/sts2credentials.svg)](https://pypi.org/project/sts2credentials/)
+[![Python package](https://github.com/ynouri/sts2credentials/workflows/Python%20package/badge.svg)](https://github.com/ynouri/sts2credentials/actions) [![PyPI package](https://badge.fury.io/py/sts2credentials.svg)](https://pypi.org/project/sts2credentials/)
 
 AWS STS output saved to ~/.aws/credentials file
 
