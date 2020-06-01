@@ -1,5 +1,5 @@
 """
-Tests for the sts2credentials package.
+Unit tests for the sts2credentials package.
 """
 # pylint: disable=line-too-long, missing-function-docstring
 from unittest.mock import patch, call
@@ -47,6 +47,7 @@ def test_aws_configure(mock_check_output):
         "dummy_value",
         "--profile=dummy_profile",
     ]
+    # aws configure set aws_access_key_id dummy_value --profile=dummy_profile
     mock_check_output.assert_called_once_with(expected_cmd)
 
 
