@@ -4,15 +4,24 @@ from setuptools import setup, find_packages
 INSTALL_REQUIRES = []
 
 EXTRAS_REQUIRE = {
-    "test": ["pytest", "pytest-clarity", "black", "flake8", "pylint"],
+    "test": [
+        "pytest",
+        "pytest-clarity",
+        "black",
+        "flake8",
+        "pylint",
+        "awscli",
+    ],
     "dev": ["tox"],
 }
 
 EXTRAS_REQUIRE["dev"] += EXTRAS_REQUIRE["test"]
 
+ENTRY_POINT = "sts2credentials=sts2credentials.__main__:sts2credentials"
+
 setup(
     name="sts2credentials",
-    version="0.0.1",
+    version="0.0.2",
     description="AWS STS output saved to ~/.aws/credentials file",
     author="Yacine Nouri",
     author_email="yacine@nouri.io",
@@ -23,6 +32,7 @@ setup(
     python_requires=">=3.6",
     extras_require=EXTRAS_REQUIRE,
     py_modules=["sts2credentials"],
+    entry_points={"console_scripts": [ENTRY_POINT]},
     zip_safe=False,
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
