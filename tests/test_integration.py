@@ -20,7 +20,9 @@ def test_integration(tmp_path):
     env = os.environ.copy()
     env["AWS_SHARED_CREDENTIALS_FILE"] = str(tmp_cred_file)
     cmd = "sts2credentials"
-    subprocess.check_output(cmd, input=STS_ASSUME_ROLE_OUTPUT, env=env)
+    subprocess.check_output(  # pylint: disable=unexpected-keyword-arg
+        cmd, input=STS_ASSUME_ROLE_OUTPUT, env=env
+    )
     # Assert credentials file is correctly written
     with tmp_cred_file.open() as f:
         credentials = f.read()
