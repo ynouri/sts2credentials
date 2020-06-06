@@ -47,8 +47,11 @@ def parse_credentials(sts_output):
 def sts2credentials():
     """Read stdin, parse aws sts output and configure credentials."""
     sts_output = sys.stdin.read()
-    creds_dict = parse_credentials(sts_output)
-    configure_credentials(creds_dict)
+    try:
+        creds_dict = parse_credentials(sts_output)
+        configure_credentials(creds_dict)
+    except json.decoder.JSONDecodeError:
+        print(sts_output)
 
 
 if __name__ == "__main__":
