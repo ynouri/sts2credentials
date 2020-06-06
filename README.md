@@ -26,3 +26,7 @@ aws sts assume-role \
 By default, `sts2credentials` will write the credentials output by the `aws sts` command in your `~/.aws/credentials` file, under a profile named `sts`.
 
 Behind the scene, `sts2credentials` runs `aws configure` commands to set the configuration.
+
+## References
+
+This tool has been inspired by this Stack Overflow answer: https://stackoverflow.com/a/57430760/1489984

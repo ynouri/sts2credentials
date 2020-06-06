@@ -3,12 +3,12 @@ Unit tests for the sts2credentials package.
 """
 # pylint: disable=line-too-long, missing-function-docstring
 from unittest.mock import patch, call
-from sts2credentials.__main__ import (
-    aws_configure,
+from sts2credentials import (
+    _aws_configure,
     configure_credentials,
     parse_credentials,
-    sts2credentials,
 )
+from sts2credentials.__main__ import sts2credentials
 
 STS_ASSUME_ROLE_OUTPUT = b"""{
     "Credentials": {
@@ -42,9 +42,9 @@ def test_parse_credentials():
     assert creds_dict == EXPECTED_CREDS_DICT
 
 
-@patch("sts2credentials.__main__.subprocess.check_output")
+@patch("sts2credentials.subprocess.check_output")
 def test_aws_configure(mock_check_output):
-    aws_configure("dummy_key", "dummy_value", "dummy_profile")
+    _aws_configure("dummy_key", "dummy_value", "dummy_profile")
     expected_cmd = [
         "aws",
         "configure",
@@ -57,7 +57,7 @@ def test_aws_configure(mock_check_output):
     mock_check_output.assert_called_once_with(expected_cmd)
 
 
-@patch("sts2credentials.__main__.aws_configure")
+@patch("sts2credentials._aws_configure")
 def test_configure_credentials(mock_aws_configure):
     configure_credentials(EXPECTED_CREDS_DICT, profile_name="dummy_profile")
     expected_calls = [
