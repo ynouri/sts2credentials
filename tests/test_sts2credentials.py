@@ -2,12 +2,13 @@
 Unit tests for the sts2credentials package.
 """
 # pylint: disable=line-too-long, missing-function-docstring
-from unittest.mock import patch, call
-from sts2credentials.__main__ import (
-    aws_configure,
+from unittest.mock import MagicMock, call, patch
+from sts2credentials import (
+    _aws_configure,
     configure_credentials,
     parse_credentials,
 )
+from sts2credentials.__main__ import sts2credentials
 
 STS_ASSUME_ROLE_OUTPUT = b"""{
     "Credentials": {
@@ -31,14 +32,19 @@ EXPECTED_CREDS_DICT = {
 }
 
 
+STS_ASSUME_ROLE_ERROR_OUTPUT = b"""
+An error occurred (AccessDenied) when calling the AssumeRole operation: MultiFactorAuthentication failed with invalid MFA one time pass code.
+"""  # noqa: E501
+
+
 def test_parse_credentials():
     creds_dict = parse_credentials(STS_ASSUME_ROLE_OUTPUT)
     assert creds_dict == EXPECTED_CREDS_DICT
 
 
-@patch("sts2credentials.__main__.subprocess.check_output")
+@patch("sts2credentials.subprocess.check_output")
 def test_aws_configure(mock_check_output):
-    aws_configure("dummy_key", "dummy_value", "dummy_profile")
+    _aws_configure("dummy_key", "dummy_value", "dummy_profile")
     expected_cmd = [
         "aws",
         "configure",
@@ -51,7 +57,7 @@ def test_aws_configure(mock_check_output):
     mock_check_output.assert_called_once_with(expected_cmd)
 
 
-@patch("sts2credentials.__main__.aws_configure")
+@patch("sts2credentials._aws_configure")
 def test_configure_credentials(mock_aws_configure):
     configure_credentials(EXPECTED_CREDS_DICT, profile_name="dummy_profile")
     expected_calls = [
@@ -68,3 +74,17 @@ def test_configure_credentials(mock_aws_configure):
         ),
     ]
     mock_aws_configure.assert_has_calls(expected_calls)
+
+
+@patch("sts2credentials.__main__.sys.stdin.read")
+@patch("builtins.print")
+def test_aws_error_occured(mock_print, mock_stdin_read):
+    """
+    Test that we print back stdin when aws sts command doesn't return valid
+    JSON.
+    """
+    mock_args = MagicMock()
+    mock_args.profile_name = "dummy-profile-name"
+    mock_stdin_read.return_value = STS_ASSUME_ROLE_ERROR_OUTPUT
+    sts2credentials(mock_args)
+    mock_print.assert_called_once_with(STS_ASSUME_ROLE_ERROR_OUTPUT)

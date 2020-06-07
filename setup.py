@@ -17,11 +17,11 @@ EXTRAS_REQUIRE = {
 
 EXTRAS_REQUIRE["dev"] += EXTRAS_REQUIRE["test"]
 
-ENTRY_POINT = "sts2credentials=sts2credentials.__main__:sts2credentials"
+ENTRY_POINT = "sts2credentials=sts2credentials.__main__:main"
 
 setup(
     name="sts2credentials",
-    version="0.0.2",
+    version="0.1.0",
     description="AWS STS output saved to ~/.aws/credentials file",
     author="Yacine Nouri",
     author_email="yacine@nouri.io",
@@ -39,5 +39,6 @@ setup(
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
     ],
 )
