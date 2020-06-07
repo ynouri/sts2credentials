@@ -21,7 +21,7 @@ ENTRY_POINT = "sts2credentials=sts2credentials.__main__:main"
 
 setup(
     name="sts2credentials",
-    version="0.1.0",
+    version="0.1.1",
     description="AWS STS output saved to ~/.aws/credentials file",
     author="Yacine Nouri",
     author_email="yacine@nouri.io",

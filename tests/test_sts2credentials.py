@@ -59,7 +59,7 @@ def test_aws_configure(mock_check_output):
 
 @patch("sts2credentials._aws_configure")
 def test_configure_credentials(mock_aws_configure):
-    configure_credentials(EXPECTED_CREDS_DICT, profile_name="dummy_profile")
+    configure_credentials(EXPECTED_CREDS_DICT, profile="dummy_profile")
     expected_calls = [
         call("aws_access_key_id", "XYZ12XYZ12XYZ12XYZ12", "dummy_profile"),
         call(
@@ -84,7 +84,7 @@ def test_aws_error_occured(mock_print, mock_stdin_read):
     JSON.
     """
     mock_args = MagicMock()
-    mock_args.profile_name = "dummy-profile-name"
+    mock_args.profile = "dummy-profile-name"
     mock_stdin_read.return_value = STS_ASSUME_ROLE_ERROR_OUTPUT
     sts2credentials(mock_args)
     mock_print.assert_called_once_with(STS_ASSUME_ROLE_ERROR_OUTPUT)

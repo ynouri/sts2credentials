@@ -10,12 +10,12 @@ from sts2credentials import parse_credentials, configure_credentials
 
 
 def parse_args():
-    """Parse CLI args, in particular --profile-name"""
+    """Parse CLI args, in particular --profile"""
     parser = argparse.ArgumentParser(
         description="Save AWS STS output to ~/.aws/credentials file."
     )
     parser.add_argument(
-        "--profile-name",
+        "--profile",
         type=str,
         default="sts",
         help="The profile name to use in ~/.aws/credentials",
@@ -28,7 +28,7 @@ def sts2credentials(args):
     sts_output = sys.stdin.read()
     try:
         creds_dict = parse_credentials(sts_output)
-        configure_credentials(creds_dict, profile_name=args.profile_name)
+        configure_credentials(creds_dict, profile=args.profile)
     except json.decoder.JSONDecodeError:
         print(sts_output)
 
