@@ -39,5 +39,6 @@ setup(
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
     ],
 )
