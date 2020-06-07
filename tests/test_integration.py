@@ -25,7 +25,7 @@ EXPECTED_CREDENTIALS_CUSTOM_PROFILE_NAME = (
     [
         (["sts2credentials"], EXPECTED_CREDENTIALS),
         (
-            ["sts2credentials", "--profile-name", "dummy-profile-name"],
+            ["sts2credentials", "--profile", "dummy-profile-name"],
             EXPECTED_CREDENTIALS_CUSTOM_PROFILE_NAME,
         ),
     ],
