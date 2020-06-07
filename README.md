@@ -44,7 +44,7 @@ import boto3
 from sts2credentials import configure_credentials
 sts = boto3.client("sts")
 response = sts.assume_role(...)
-configure_credentials(response["Credentials"], profile_name="foo")
+configure_credentials(response["Credentials"], profile="foo")
 ```
 
 ## References
