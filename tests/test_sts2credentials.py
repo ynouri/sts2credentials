@@ -2,7 +2,7 @@
 Unit tests for the sts2credentials package.
 """
 # pylint: disable=line-too-long, missing-function-docstring
-from unittest.mock import patch, call
+from unittest.mock import MagicMock, call, patch
 from sts2credentials import (
     _aws_configure,
     configure_credentials,
@@ -83,6 +83,8 @@ def test_aws_error_occured(mock_print, mock_stdin_read):
     Test that we print back stdin when aws sts command doesn't return valid
     JSON.
     """
+    mock_args = MagicMock()
+    mock_args.profile_name = "dummy-profile-name"
     mock_stdin_read.return_value = STS_ASSUME_ROLE_ERROR_OUTPUT
-    sts2credentials()
+    sts2credentials(mock_args)
     mock_print.assert_called_once_with(STS_ASSUME_ROLE_ERROR_OUTPUT)
