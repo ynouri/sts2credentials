@@ -27,6 +27,26 @@ By default, `sts2credentials` will write the credentials output by the `aws sts`
 
 Behind the scene, `sts2credentials` runs `aws configure` commands to set the configuration.
 
+## --profile option
+
+Using the `--profile` option will let you write into the profile name of your
+choice.
+
+```
+aws sts assume-role ...
+    | sts2credentials --profile my-custom-profile
+```
+
+## Python public API
+
+```python
+import boto3
+from sts2credentials import configure_credentials
+sts = boto3.client("sts")
+response = sts.assume_role(...)
+configure_credentials(response["Credentials"], profile_name="foo")
+```
+
 ## References
 
 This tool has been inspired by this Stack Overflow answer: https://stackoverflow.com/a/57430760/1489984
